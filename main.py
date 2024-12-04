@@ -1,25 +1,40 @@
-import json
-import sqlite3
-import requests
+from wufoo_API_client import WufooAPIClient
+from database import Database
 
+# Main's function is to fetch data and storing it in database_Reviews
+def main():
+    # Load the API key from the file named secret.txt
+    try:
+        with open('secret.txt', 'r') as file:
+            api_key = file.read().strip()
+    except FileNotFoundError:
+        # Handle the case where the secret file is missing
+        print("Error: secret.txt was not found. You might wanna find it.  :)")
+        return
 
-from requests.auth import HTTPBasicAuth
+    # Initialize the Wufoo API client
+    wufoo_client = WufooAPIClient(api_key)
 
-with open('secrets.txt', 'r') as file:
-    api_key = file.read().strip()
-#Accesses the form. the username is redscale and the forms name is Final
-url = 'https://redscale.wufoo.com/api/v3/forms/Final/entries/json'
+    # Fetch data from the Wufoo form
+    entries = wufoo_client.fetch_data()
 
-response = requests.get(url, auth=HTTPBasicAuth(api_key, 'pass'))
+    # Check if there are entries to process
+    if entries:
+        # Define the name of the SQLite database
+        database_Reviews = 'WufooData.db'
 
-#prints a string to the user if the connection was succesful
-if response.status_code == 200:
-    print("Successfully authenticated!")
-    print(response.json())
-# prints a string to the user if the connection failed
-else:
-    print(f"Failed to authenticate. Status code: {response.status_code}")
+        # Initialize the database manager
+        db_manager = Database(database_Reviews)
 
+        # Create the database table
+        db_manager.create_table()
 
+        # Insert the fetched entries into the database
+        db_manager.insert_entries(entries)
+    else:
+        # Print a message if no entries were retrieved
+        print("No entries retrieved from the Wufoo form.")
+
+# Run the main function
 if __name__ == '__main__':
-    print('hello')
+    main()
