@@ -23,14 +23,14 @@ def main():
         # Define the name of the SQLite database
         database_Reviews = 'WufooData.db'
 
-        # Initialize the database manager
-        db_manager = Database(database_Reviews)
+        # Initialize the database
+        db = Database(database_Reviews)
 
         # Create the database table
-        db_manager.create_table()
+        db.create_table()
 
         # Insert the fetched entries into the database
-        db_manager.insert_entries(entries)
+        db.insert_entries(entries)
     else:
         # Print a message if no entries were retrieved
         print("No entries retrieved from the Wufoo form.")
