@@ -47,7 +47,7 @@ class Database:
             # Iterate over each entry and insert it into the database
             for entry in entries:
                 cursor.execute('''
-                    INSERT OR IGNORE INTO WufooEntries (EntryID, BusinessName, Rating, TimeFoodAvailable, Feedback)
+                    INSERT OR IGNORE INTO WufooEntries (EntryID, Hall, Rating, Feedback)
                     VALUES (?, ?, ?, ?, ?)
                 ''', (
                     # Make sure to replace 'Field#' with the actual field name given from Wufoo
@@ -55,8 +55,7 @@ class Database:
                     entry.get('Field1', 'N/A'),
                     entry.get('Field2', 'N/A'),
                     entry.get('Field3', 'N/A'),
-                    entry.get('Field4', 0),
-                    entry.get('Field5', 'N/A')
+                    entry.get('Field4', 'N/A'),
                 ))
             # Commit the changes to the database
             connection.commit()
