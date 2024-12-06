@@ -1,70 +1,76 @@
 import sqlite3
 
-# Class to handle SQLite database operations
+# This class handles SQLite database operations.
 class Database:
+    def __init__(self, database_name):
+        self.database_name = database_name
 
-    # Initialize the Database with the database file name
-    def __init__(self, database_Reviews):
-        self.database_Reviews = database_Reviews
-
-    # Create a database table to store Wufoo form entries
+    # Creates a table for form entries on Wufoo.
     def create_table(self):
         connection = None
         try:
-            # Connect to the SQLite database
-            connection = sqlite3.connect(self.database_Reviews)
+            connection = sqlite3.connect(self.database_name)
             cursor = connection.cursor()
 
-            # Execute the SQL statement to create the table
+            # Only creates table if there is not one there already
+            # and creates the columns for the table.
             cursor.execute('''
-                CREATE TABLE IF NOT EXISTS WufooEntries (
+                CREATE TABLE IF NOT EXISTS DiningHall_Rating (
                     EntryID INTEGER PRIMARY KEY,
-                    BusinessName TEXT,
-                    Rating INTEGER,
-                    TimeFoodAvailable TEXT,
+                    DiningHall TEXT,
+                    Mealtime TEXT,
+                    Beverage TEXT,
+                    Cuisine TEXT,
+                    FoodTemp TEXT,
+                    Dessert TEXT,
+                    Dinning TEXT,
                     Feedback TEXT
                 )
             ''')
-            # Commit the changes to the database
             connection.commit()
-            print(f"Table 'WufooEntries' created successfully in database '{self.database_Reviews}'.")
+            print(f"Table 'DiningHall_Rating' created successfully in database '{self.database_name}'.")
+        # Used "Error as e" to know what type of error.
         except sqlite3.Error as e:
-            # Handle exceptions during table creation
             print(f"Error creating table: {e}")
+        # Finally close the connection when all data is processed.
         finally:
-            # Ensure the connection is closed
             if connection:
                 connection.close()
 
-    # Insert form entries into the database
+    # Inserts form entries into the DiningHall_Rating table.
     def insert_entries(self, entries):
         connection = None
         try:
-            # Connect to the SQLite database
-            connection = sqlite3.connect(self.database_Reviews)
+            connection = sqlite3.connect(self.database_name)
             cursor = connection.cursor()
 
-            # Iterate over each entry and insert it into the database
+            # Iterate through each entry in entries and insert it into the correct field.
             for entry in entries:
+                dining_hall = entry.get('Field9', '')  # DiningHall
+                mealtime = entry.get('Field10', '')  # Mealtime
+                beverage = entry.get('Field16', '')  # Beverage
+                cuisine = entry.get('Field15', '')  # Cuisine
+                foodtemp = entry.get('Field14', '')  # FoodTemp
+                dessert = entry.get('Field13', '')  # Dessert
+                dinning = entry.get('Field12', '')  # Dinning
+                feedback = entry.get('Field19', '')  # Feedback
+
+                # The pulled data will be added into the database table.
                 cursor.execute('''
-                               INSERT OR IGNORE INTO WufooEntries (EntryID, BusinessName, Rating, Feedback)
-                               VALUES (?, ?, ?, ?)
-                           ''', (
-                    # Make sure to replace 'Field#' with the actual field name given from Wufoo
-                    # entry.get('EntryId'),
-                    entry.get('Crimson Dining & Student Lounge ', 'N/A'),
-                    entry.get('Maxwell Cafe', 'N/A'),
-                    entry.get('East Campus Commons', 'N/A'),
-                    entry.get('Flynn Dinning Commmons', 'N/A'),
-                    entry.get('The Bears Den', 'N/A')
-                ))
-            # Commit the changes to the database
+                        INSERT INTO DiningHall_Rating (
+                        DiningHall, Mealtime, Beverage, 
+                        Cuisine, FoodTemp, Dessert, Dinning, Feedback)
+                        VALUES (?, ?, ?, ?, ?, ?, ?, ?)''',
+                    (dining_hall, mealtime, beverage, cuisine,
+                     foodtemp, dessert, dinning, feedback))
+
+            # Commit changes to the database after all entries are added.
             connection.commit()
-            print(f"Inserted {len(entries)} entries into the database.")
+            print(f"Inserted {len(entries)} forms into the database.")
+
+        # Error handling
         except sqlite3.Error as e:
-            # Handle exceptions during data insertion
             print(f"Error inserting entries: {e}")
         finally:
-            # Ensure the connection is closed
             if connection:
                 connection.close()

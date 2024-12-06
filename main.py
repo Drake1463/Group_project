@@ -1,40 +1,33 @@
 from wufoo_API_client import WufooAPIClient
 from database import Database
 
-# Main's function is to fetch data and storing it in database_Reviews
+
+# Main function to obtain data and store it in the database.
 def main():
-    # Load the API key from the file named secret.txt
     try:
+        # API key is stored in the secret.txt file.
         with open('secret.txt', 'r') as file:
             api_key = file.read().strip()
+
     except FileNotFoundError:
-        # Handle the case where the secret file is missing
-        print("Error: secret.txt was not found. You might wanna find it.  :)")
+        print("Error: secret.txt was not found. Better go find it. :)")
         return
 
-    # Initialize the Wufoo API client
     wufoo_client = WufooAPIClient(api_key)
+    entries = wufoo_client.obtain_data()
 
-    # Fetch data from the Wufoo form
-    entries = wufoo_client.fetch_data()
-
-    # Check if there are entries to process
+    # Check if entries are retrieved and proceed.
     if entries:
-        # Define the name of the SQLite database
-        database_Reviews = 'WufooData.db'
-
-        # Initialize the database
-        db = Database(database_Reviews)
-
-        # Create the database table
+        # Name of the database file is BSU_Reviews.db
+        database_name = 'BSU_Reviews.db'
+        db = Database(database_name)
+        # Table is created
         db.create_table()
-
-        # Insert the fetched entries into the database
+        # Insert the obtained entries
         db.insert_entries(entries)
     else:
-        # Print a message if no entries were retrieved
-        print("No entries retrieved from the Wufoo form.")
+        print("No entries retrieved from the Wufoo form. Sad :(")
 
-# Run the main function
+# Execute the main function
 if __name__ == '__main__':
     main()
