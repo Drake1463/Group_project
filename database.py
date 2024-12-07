@@ -12,6 +12,11 @@ class Database:
             connection = sqlite3.connect(self.database_name)
             cursor = connection.cursor()
 
+            # Clear existing entries in the table
+            cursor.execute("DELETE FROM DiningHall_Rating")
+            connection.commit()
+            print("Cleared existing entries from 'DiningHall_Rating' table.")
+
             # Only creates table if there is not one there already
             # and creates the columns for the table.
             cursor.execute('''
