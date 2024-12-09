@@ -7,7 +7,6 @@ class Database:
 
     # Creates a table for form entries on Wufoo.
     def create_table(self):
-        connection = None
         try:
             connection = sqlite3.connect(self.database_name)
             cursor = connection.cursor()
@@ -39,12 +38,10 @@ class Database:
             print(f"Error creating table: {e}")
         # Finally close the connection when all data is processed.
         finally:
-            if connection:
-                connection.close()
+            connection.close()
 
     # Inserts form entries into the DiningHall_Rating table.
     def insert_entries(self, entries):
-        connection = None
         try:
             connection = sqlite3.connect(self.database_name)
             cursor = connection.cursor()
@@ -77,5 +74,4 @@ class Database:
         except sqlite3.Error as e:
             print(f"Error inserting entries: {e}")
         finally:
-            if connection:
-                connection.close()
+            connection.close()
