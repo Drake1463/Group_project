@@ -7,15 +7,9 @@ class Database:
 
     # Creates a table for form entries on Wufoo.
     def create_table(self):
-        connection = None
         try:
             connection = sqlite3.connect(self.database_name)
             cursor = connection.cursor()
-
-            # Clear existing entries in the table
-            cursor.execute("DELETE FROM DiningHall_Rating")
-            connection.commit()
-            print("Cleared existing entries from 'DiningHall_Rating' table.")
 
             # Only creates table if there is not one there already
             # and creates the columns for the table.
@@ -34,31 +28,34 @@ class Database:
             ''')
             connection.commit()
             print(f"Table 'DiningHall_Rating' created successfully in database '{self.database_name}'.")
+
+            # Clears the table of any data
+            cursor.execute(f"DELETE FROM DiningHall_Rating")
+            connection.commit()
+
         # Used "Error as e" to know what type of error.
         except sqlite3.Error as e:
             print(f"Error creating table: {e}")
         # Finally close the connection when all data is processed.
         finally:
-            if connection:
-                connection.close()
+            connection.close()
 
     # Inserts form entries into the DiningHall_Rating table.
     def insert_entries(self, entries):
-        connection = None
         try:
             connection = sqlite3.connect(self.database_name)
             cursor = connection.cursor()
 
             # Iterate through each entry in entries and insert it into the correct field.
             for entry in entries:
-                dining_hall = entry.get('Field9', '')  # DiningHall
-                mealtime = entry.get('Field10', '')  # Mealtime
-                beverage = entry.get('Field16', '')  # Beverage
-                cuisine = entry.get('Field15', '')  # Cuisine
-                foodtemp = entry.get('Field14', '')  # FoodTemp
-                dessert = entry.get('Field13', '')  # Dessert
-                dinning = entry.get('Field12', '')  # Dinning
-                feedback = entry.get('Field19', '')  # Feedback
+                dining_hall = entry.get('Field9')  # DiningHall
+                mealtime = entry.get('Field10')  # Mealtime
+                beverage = entry.get('Field16')  # Beverage
+                cuisine = entry.get('Field15')  # Cuisine
+                foodtemp = entry.get('Field14')  # FoodTemp
+                dessert = entry.get('Field13')  # Dessert
+                dinning = entry.get('Field12')  # Dinning
+                feedback = entry.get('Field19')  # Feedback
 
                 # The pulled data will be added into the database table.
                 cursor.execute('''
@@ -77,5 +74,4 @@ class Database:
         except sqlite3.Error as e:
             print(f"Error inserting entries: {e}")
         finally:
-            if connection:
-                connection.close()
+            connection.close()
