@@ -1,5 +1,8 @@
 import sqlite3
 
+from Tools.scripts.mailerdaemon import emparse_list
+
+
 # This class handles SQLite database operations.
 class Database:
     def __init__(self, database_name):
@@ -11,10 +14,17 @@ class Database:
             connection = sqlite3.connect(self.database_name)
             cursor = connection.cursor()
 
-            # Clear existing entries in the table
-            cursor.execute("DELETE FROM DiningHall_Rating")
-            connection.commit()
-            print("Cleared existing entries from 'DiningHall_Rating' table.")
+            # Check if the table has data in it
+            cursor.execute("SELECT COUNT(*) FROM DiningHall_Rating")
+            row_count = cursor.fetchone()[0]
+
+            # If there is data in the table then it is cleared else it passes
+            if row_count > 0:
+                cursor.execute("DELETE FROM DiningHall_Rating")
+                connection.commit()
+                print("Cleared existing entries from 'DiningHall_Rating' table.")
+            else:
+                pass
 
             # Only creates table if there is not one there already
             # and creates the columns for the table.
@@ -48,14 +58,14 @@ class Database:
 
             # Iterate through each entry in entries and insert it into the correct field.
             for entry in entries:
-                dining_hall = entry.get('Field9')  # DiningHall
-                mealtime = entry.get('Field10')  # Mealtime
-                beverage = entry.get('Field16')  # Beverage
-                cuisine = entry.get('Field15')  # Cuisine
-                foodtemp = entry.get('Field14')  # FoodTemp
-                dessert = entry.get('Field13')  # Dessert
-                dinning = entry.get('Field12')  # Dinning
-                feedback = entry.get('Field19')  # Feedback
+                dining_hall = entry.get('Field9', '')  # DiningHall
+                mealtime = entry.get('Field10', '')  # Mealtime
+                beverage = entry.get('Field16', '')  # Beverage
+                cuisine = entry.get('Field15', '')  # Cuisine
+                foodtemp = entry.get('Field14', '')  # FoodTemp
+                dessert = entry.get('Field13', '')  # Dessert
+                dinning = entry.get('Field12', '')  # Dinning
+                feedback = entry.get('Field19', '')  # Feedback
 
                 # The pulled data will be added into the database table.
                 cursor.execute('''
