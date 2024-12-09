@@ -1,57 +1,58 @@
+Overview:
+    This program pulls data from Wufoo forms and stores it into an SQLite database.
 
-The purpose of the project (what it provides for your customers, who are your possible customers, etc.).
+What the Program Does:
+    - It connects to a Wufoo form using the Wufoo API to obtain form entries.
+    - It saves the data into an SQLite database, which contains a table to hold the
+    form responses (such as Dining Hall ratings, meal details, and feedback).
 
-The purpose of the project was so students around campus can fill out a survey that would provide feedback on multiple things revolving around the dining halls.These will include What their favorite dining hall is, what time do they like to eat at, what beverage do the prefer, what their favorite type of cuisine is, what temperature do they prefer there food to be at, what their favorite dessert is, where do they prefer to eat, and a spot for feedback.We will then take in the data and allow the user to search and sort for the results.
+How It Works:
 
-Short plan. You use Scrum methodology, so it should outline actions planned for every 1-4 weeks sprint
-Our Scrum methodology was that we would break it into 4 sprints. Sprint 1 would be deciding the project and team logistics. Sprint 2 was setting up jira. Sprint 3 was to Adjust team roles ,define Jira and reassess. Sprint 4 was to execute all Jira stories to develop, test, and document the final project..
+1. WufooAPIClient Class:
+    Purpose:
+        - This class is responsible for interacting with the Wufoo API to retrieve
+        form entries.
+    What It Does:
+        - Takes an API key as input from the file (secret.txt). Then sends a request
+        to the Wufoo API to
+           get the form data. Finally, it returns the data from the form as a list of
+           entries or as an empty list if something goes wrong.
 
-List of necessary tools for realization (you are not restricted with technology that we learned)
-Github to share our code as a team
-Wufoo to get our data from the form
-Discord for communication
-Jira to help our team stay on track and have clear goals
-Paper and pencil to help draw out some of our plans
+2. Database Class:
+    Purpose:
+        - This class handles interactions with the SQLite database, and it includes creating
+        tables and inserting data.
+    What It Does:
+        - Creates a table called DiningHall_Rating (if it doesn't already exist) with columns
+        like DiningHall, Mealtime, Beverage, Cuisine, FoodTemp, Dessert, Dinning, and Feedback.
+        - Inserts the retrieved form data into the DiningHall_Rating table.
 
-Instructions how user should use your program
-First the user should run the main file. This will update the database to be up to date. After the user sees in the terminal “Inserted (number) forms into the database.” Then the user should run the app.py which will display the gui to the user. 
-The user can now sort through all the entries and sort them by each category.
+3. Main Function:
+    Purpose:
+        - This function orchestrates the flow of the program, managing data retrieval and storage.
+    What It Does:
+        - Reads the API key from the secret.txt file.
+        - Uses the WufooAPIClient to obtain data from the Wufoo form.
+        - If data is successfully retrieved, it uses the Database class to store the entries in the database.
+        - If no data is retrieved or there is an error, it prints an appropriate error message.
 
-Team members (without specific roles as in classic scrum) and their contribution to that project
-Derek
-Create the jira
-Create the wufoo
-Create the documentation
-Create backlog
-Create sprint plans
-Exchange ideas
-Exchange info and team logistics
+Files Used:
+    - secret.txt: Contains the API key needed to access the Wufoo form.
+    - BSU_Reviews.db: This is the SQLite database file where the form data will be stored.
 
-Vraj
-Write program to collect data from wufoo
-Create a Data base to store all the forum data that's collected.
-Exchange ideas
-Exchange info and team logistics
+How to Run the Program:
+1. Have the secret.txt file in the same directory as the program,and make sure it has the API key.
+2. Run the program, and it will connect to the Wufoo form, obtain the forms, and save them in the
+   BSU_Reviews.db database.
 
-Dylan
-Write automated testing
-Exchange ideas
-Exchange info and team logistics
-
-Gray
-Write automated testing
-Exchange ideas
-Exchange info and team logistics
-
-Evan
-Write a GUI to display data
-Create a Data base to store all the forum data that's collected.
-Exchange ideas
-Exchange info and team logistics
-
-If something was planned but not done, describe why it was not done
-We were planning on doing specific food items for the individual halls but the menus in each hall were just too big and we thought it wouldn't give us the data we really wanted.
-
-Write the API in documentation so I can run your program.
-8EM2-L4JF-C9XX-UZAO
-
+Expected Output:
+- The program will print "Successfully authenticated!" when the API request succeeds.
+- If form data is retrieved, the program will print how many forms were inserted
+ into the database.
+- If there is an issue with the API key or database error messages will be sent to the terminal.
+ Error Codes:
+    - "Error: secret.txt was not found. Better go find it. :)" if the API key file is missing.
+    - "Failed to authenticate. Status code: #. No entries retrieved from the Wufoo form." if the
+    request fails or the forms are empty.
+    - "Inserted # forms into the database." if entries are successfully saved to the database.
+    - "No entries retrieved from the Wufoo form. Sad :(" if no data is retrieved.
