@@ -16,9 +16,9 @@ def fetch_data_from_db(database_name, query="SELECT * FROM DiningHall_Rating"):
         return [], []
 
 #WINDOW LAYOUT
-def create_main_window(database_name):
+def create_main_window(db_name):
     sg.theme('TealMono')
-    headers, data = fetch_data_from_db(database_name)
+    headers, data = fetch_data_from_db(db_name)
 
     #this converts the list of tuples to a list of lists (this is required)
     data = [list(row) for row in data]
