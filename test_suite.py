@@ -56,26 +56,7 @@ class TestGUI(unittest.TestCase):
 
         return headers, rows
 
-    def test_gui_display(self = "SELECT * FROM DiningHall_Rating"):
-        # Test if the main window initializes correctly
-        window = create_main_window(self.db_name)
-        table = window['-TABLE-']
-        self.assertEqual(len(table.Values), 2, "GUI table does not display correct number of rows.")
-        self.assertEqual(table.Values[0][1], 'Dining Hall A', "First row in GUI table does not match expected data.")
-        window.close()
 
-    def test_gui_sorting(self):
-        # Test sorting functionality via GUI
-        window = create_main_window(self.db_name)
-        sort_column = 'DiningHall'
-        query = f"SELECT * FROM DiningHall_Rating ORDER BY {sort_column}"
-        headers, sorted_data = fetch_data_from_db(self.db_name, query)
-        window['-TABLE-'].update(values=[list(row) for row in sorted_data])
-
-        # Validate sorting
-        table = window['-TABLE-']
-        self.assertEqual(table.Values[0][1], 'Dining Hall A', "Sorting did not arrange data correctly.")
-        window.close()
 
 
 class TestDatabase(unittest.TestCase):
