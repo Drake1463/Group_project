@@ -51,14 +51,14 @@ class Database:
 
             # Iterate through each entry in entries and insert it into the correct field.
             for entry in entries:
-                dining_hall = entry.get('Field9', '')  # DiningHall
-                mealtime = entry.get('Field10', '')  # Mealtime
-                beverage = entry.get('Field16', '')  # Beverage
-                cuisine = entry.get('Field15', '')  # Cuisine
-                foodtemp = entry.get('Field14', '')  # FoodTemp
-                dessert = entry.get('Field13', '')  # Dessert
-                dinning = entry.get('Field12', '')  # Dinning
-                feedback = entry.get('Field19', '')  # Feedback
+                dining_hall = entry.get('Field9')  # DiningHall
+                mealtime = entry.get('Field10')  # Mealtime
+                beverage = entry.get('Field16')  # Beverage
+                cuisine = entry.get('Field15')  # Cuisine
+                foodtemp = entry.get('Field14')  # FoodTemp
+                dessert = entry.get('Field13')  # Dessert
+                dinning = entry.get('Field12')  # Dinning
+                feedback = entry.get('Field19')  # Feedback
 
                 # The pulled data will be added into the database table.
                 cursor.execute('''
