@@ -3,7 +3,6 @@ import sqlite3
 from database import Database
 from wufoo_API_client import WufooAPIClient
 from app import fetch_data_from_db, create_main_window
-import PySimpleGUI as sg
 
 class TestGUI(unittest.TestCase):
     def setUp(self):
