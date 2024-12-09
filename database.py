@@ -32,9 +32,9 @@ class Database:
             connection.commit()
             print(f"Table 'DiningHall_Rating' created successfully in database '{self.database_name}'.")
 
-            # # Clears the table of any data
-            # cursor.execute(f"DELETE FROM DiningHall_Rating")
-            # connection.commit()
+            # Clears the table of any data
+            cursor.execute(f"DELETE FROM DiningHall_Rating")
+            connection.commit()
 
         # Used "Error as e" to know what type of error.
         except sqlite3.Error as e:
