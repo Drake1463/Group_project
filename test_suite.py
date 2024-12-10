@@ -24,7 +24,7 @@ class TestGUI(unittest.TestCase):
                 'Field19': 'Great experience!'
             },
             {
-                'Field9': 'The Bear's Den',
+                'Field9': 'Flynn Dining Commons',
                 'Field10': 'Dinner',
                 'Field16': 'Juice',
                 'Field15': 'Mexican',
