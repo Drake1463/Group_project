@@ -28,7 +28,7 @@ def create_main_window(db_name):
         [sg.Text("Dining Hall Ratings")],
         [sg.Table(values=data,
                   headings=headers,
-                  display_row_numbers=True,
+                  display_row_numbers=False,
                   auto_size_columns=True,
                   justification='center',
                   num_rows=min(25, len(data)),
