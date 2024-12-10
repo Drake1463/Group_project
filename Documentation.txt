@@ -30,7 +30,6 @@ Write program to collect data from wufoo
 Create a Data base to store all the forum data that's collected.
 Exchange ideas
 Exchange info and team logistics
-Write automated testing
 
 
 Dylan
@@ -45,7 +44,6 @@ Exchange info and team logistics
 
 Evan
 Write a GUI to display data
-Create a Data base to store all the forum data that's collected.
 Exchange ideas
 Exchange info and team logistics
 
