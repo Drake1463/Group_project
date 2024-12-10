@@ -14,23 +14,23 @@ class TestGUI(unittest.TestCase):
         # Insert some data into the table
         entries = [
             {
-                'Field9': 'Dining Hall A',
+                'Field9': 'Maxwell Cafe',
                 'Field10': 'Lunch',
                 'Field16': 'Water',
                 'Field15': 'Italian',
                 'Field14': 'Hot',
                 'Field13': 'Cake',
-                'Field12': 'Clean',
+                'Field12': 'Your Room',
                 'Field19': 'Great experience!'
             },
             {
-                'Field9': 'Dining Hall B',
+                'Field9': 'The Bear's Den',
                 'Field10': 'Dinner',
                 'Field16': 'Juice',
                 'Field15': 'Mexican',
                 'Field14': 'Warm',
-                'Field13': 'Pie',
-                'Field12': 'Spacious',
+                'Field13': 'Pastry',
+                'Field12': 'Dining Hall',
                 'Field19': 'Loved the ambiance!'
             }
         ]
